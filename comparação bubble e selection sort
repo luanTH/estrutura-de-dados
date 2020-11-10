@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void bolha(int vet[],int n);
+void selection_sort(int vet[],int n);
+
+int main()
+{
+   srand(time(NULL));
+   clock_t tib,tfb,tiS,tfS;
+   double tempo_gastoB, tempo_gastoS;
+   int n=10000;
+   int i;
+   int vet[n],aux[n];
+   for(i=0;i<n;i++){
+     aux[i] = vet[i] =  rand()%10000;
+   }
+
+   for(i=0;i<n;i++){
+      printf("vet[%i] = %i\n",i,vet[i]);
+   }
+   tib = clock();
+   bolha(aux,n);
+   tfb = clock();
+   tiS = clock();
+   selection_sort(vet,n);
+   tfS = clock();
+   printf("Ordenado:\n");
+   for(i=0;i<n;i++){
+      printf("vet[%i] = %i\n",i,vet[i]);
+   }
+   tempo_gastoB = ((double)(tfb - tib)) / (CLOCKS_PER_SEC/1000);
+   tempo_gastoS = ((double)(tfS - tiS)) / (CLOCKS_PER_SEC/1000);
+   printf("\n\nTempo gasto metodo Booble sort: %f ms\n", tempo_gastoB);
+   printf("\n\nTempo gasto metodo Selection sort: %f ms\n", tempo_gastoS);
+    return 0;
+}
+void bolha(int vet[],int n){
+int i, j;
+for(i=0;i<n;i++){
+    for(j=i+1;j<n;j++){
+        if(vet[i]>vet[j]){
+            int x=vet[i];
+            vet[i] = vet[j];
+            vet[j] = x;
+        }
+    }
+}
+}
+void selection_sort (int vet[],int n){
+  int i,j;
+  for (i=0;i<(n-1);i++) {
+    int min = i;
+    for (j=i+1;j<n;j++) {
+      if (vet[j] < vet[min]) {
+           min = j;
+      }
+    }
+    if(i!=min){
+      int aux = vet[i];
+      vet[i] = vet[min];
+      vet[min] = aux;
+    }
+  }
+}
